@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">signup</string>
+    <string name="title_activity_create_store">CreateStore</string>
+
+    <string-array name="names">
+        <item>Please select a value</item>
+        <item>User</item>
+        <item>Provider</item>
+
+    </string-array>
+</resources>
