@@ -2,7 +2,7 @@ package com.example.main.main.presenter.httpConnection;
 
 import com.example.main.serviceModels.AccessToken;
 
-public interface Presenter {
+public interface SignupPresenter {
     public void OnAccessTokenReceived(AccessToken accessToken);
 
     }

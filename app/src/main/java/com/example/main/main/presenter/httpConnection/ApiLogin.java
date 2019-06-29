@@ -18,18 +18,18 @@ public class ApiLogin {
     private static final String BASE_URL = "http://192.168.1.3:5000/";
     private static final String APP_USER_NAME = "uncashapp";
     private static final String APP_USER_PASSWORD = "234568643456786950" ;
-    private Presenter presenter;
+    private SignupPresenter signupPresenter;
 
-    public ApiLogin(Presenter presenter) {
-        this.presenter = presenter;
+    public ApiLogin(SignupPresenter signupPresenter) {
+        this.signupPresenter = signupPresenter;
     }
 
     public void OnLoginCompleted(AccessToken token){
-        presenter.OnAccessTokenReceived(token);
+        signupPresenter.OnAccessTokenReceived(token);
     }
     public void exceute() {
         Log.v("msg" , "exceute api login");
-        this.presenter = presenter;
+        this.signupPresenter = signupPresenter;
 //
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -76,7 +76,7 @@ public class ApiLogin {
                         // code block
                        // Log.v("msg" , ""+response.body().getToken());
 
-                        //call Presenter interface.OnAccessTokenReceived
+                        //call SignupPresenter interface.OnAccessTokenReceived
                         OnLoginCompleted(response.body());
                         Log.v("msg" , "success");
                         break;

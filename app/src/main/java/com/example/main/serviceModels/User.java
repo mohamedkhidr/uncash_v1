@@ -1,20 +1,24 @@
 package com.example.main.serviceModels;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
-    private String username;
+    @SerializedName("phone_number")
+    private String phoneNumber;
     private String password;
-    private int app_id;
+    @SerializedName("app_id")
+    private int appId;
 
 
-    public User(String username, String password, int app_id) {
-        this.username = username;
+    public User(String phoneNumber, String password, int appId) {
+        this.phoneNumber = phoneNumber;
         this.password = password;
-        this.app_id = app_id;
+        this.appId = appId;
     }
 
 
-    public String getUserName() {
-        return username;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getPassword() {
@@ -22,6 +26,6 @@ public class User {
     }
 
     public int getAppId() {
-        return app_id;
+        return appId;
     }
 }

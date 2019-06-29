@@ -6,22 +6,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.main.features.view.DashBoard;
+import com.example.main.main.presenter.httpConnection.LoginPresenterImpl;
+import com.example.main.main.presenter.httpConnection.SignupPresenterImpl;
 import com.example.main.signup.phoneVerification.view.PhoneVerificationImpl;
 import com.example.main.R;
-import com.example.main.main.presenter.httpConnection.PresenterImpl;
+
+import com.example.main.validator.Login;
 import com.example.main.validator.Network;
+import com.example.main.validator.Signup;
 
 public class MainActivity extends AppCompatActivity implements Iview {
-    private PresenterImpl presenter;
+    private SignupPresenterImpl signupPresenter;
+    private LoginPresenterImpl  loginPresenter ;
+    private EditText phoneEditText ;
+    private EditText passEditText ;
     ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new PresenterImpl(this);
+        phoneEditText = (EditText) findViewById(R.id.phoneNumberText);
+        passEditText = (EditText) findViewById(R.id.passText);
+        signupPresenter = new SignupPresenterImpl(this);
+        loginPresenter = new LoginPresenterImpl(this);
     }
 
     public void OnSignup(View view) {
@@ -33,7 +45,29 @@ public class MainActivity extends AppCompatActivity implements Iview {
             dialog.setTitle("Loading");
             dialog.setMessage("Please wait ");
             dialog.show();
-            presenter.signup();
+            signupPresenter.signup();
+        }else{
+            Toast.makeText(this , "Check network connectivity" , Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public void OnSignin(View view) {
+        Network network = new Network(this);
+        boolean networkStatus = network.isNetworkConnected();
+        Login login = new Login(phoneEditText , passEditText);
+        String phoneValue = phoneEditText.getText().toString();
+        String passwordValue = passEditText.getText().toString();
+        if(networkStatus) {
+            if(login.validate()) {
+                Log.v("msg", "onsignip");
+                dialog = new ProgressDialog(this);
+                dialog.setTitle("Loading");
+                dialog.setMessage("Please wait ");
+                dialog.show();
+                loginPresenter.signin(phoneValue , passwordValue);
+            }
         }else{
             Toast.makeText(this , "Check network connectivity" , Toast.LENGTH_SHORT).show();
         }
@@ -42,11 +76,26 @@ public class MainActivity extends AppCompatActivity implements Iview {
     }
 
 
+
     @Override
     public void OnSignupAuthenticationComplete(String accessToken) {
         Intent intent = new Intent(this , PhoneVerificationImpl.class);
         intent.putExtra("accessToken" ,accessToken );
         dialog.dismiss();
         startActivity(intent);
+    }
+
+    @Override
+    public void OnSigninAuthenticationComplete(String accessToken) {
+        Intent intent = new Intent(this , DashBoard.class);
+        intent.putExtra("accessToken" , accessToken);
+        dialog.dismiss();
+        startActivity(intent);
+    }
+
+    @Override
+    public void showWrongCredentialsHint() {
+        dialog.dismiss();
+        Toast.makeText(this , "Invalid user name or password " , Toast.LENGTH_SHORT).show();
     }
 }

@@ -5,12 +5,12 @@ import android.util.Log;
 import com.example.main.serviceModels.AccessToken;
 import com.example.main.main.view.Iview;
 
-public class PresenterImpl implements Presenter {
+public class SignupPresenterImpl implements SignupPresenter {
     private Iview iview;
     private ApiLogin apiLogin ;
 
 
-    public PresenterImpl(Iview iview) {
+    public SignupPresenterImpl(Iview iview) {
         this.iview = iview;
     }
 

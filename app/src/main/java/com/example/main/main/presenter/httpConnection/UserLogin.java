@@ -15,12 +15,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserLogin {
-    private static final String BASE_URL = "http://192.163.1.3:5000/";
+    private static final String BASE_URL = "http://192.168.1.3:5000/";
     private static final int APP_ID = 43256708;
-    private String userName ;
+    private String phoneNumber ;
     private String password ;
-    private int appId ;
+    private LoginPresenter loginPresenter;
 
+    public UserLogin(LoginPresenter loginPresenter , String phoneNumber , String password) {
+        this.loginPresenter = loginPresenter;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
 
     public void exceute() {
 //
@@ -40,7 +45,7 @@ public class UserLogin {
 
         // user credentials
 
-        User user = new User(userName, password ,appId );
+        User user = new User(phoneNumber, password ,APP_ID );
 
         // api authentication service
         LoginAuthentication loginAuthentication = retrofit.create(LoginAuthentication.class);
@@ -62,12 +67,13 @@ public class UserLogin {
                         break;
                     case 401:
                         // code block
+                        loginPresenter.OnWrongCredentials();
                         Log.v("msg" , "bad one or more parameters");
                         break;
                     case 200:
                         // code block
                         AccessToken token  = response.body();
-                        //call Presenter interface.OnAccessTokenReceived
+                         loginPresenter.OnAccessTokenReceived(token);
                         Log.v("msg" , "success");
                         break;
                     default:
