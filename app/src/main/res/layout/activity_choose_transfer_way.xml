@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.sendMoney.ChooseTransferWay">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manual Transfer"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="32dp"
+            android:textColor="#FFF"
+            android:textAllCaps="false"
+            android:background="@drawable/button_rounded"
+            android:onClick="OnManualClicked"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:textAllCaps="false"
+            android:background="@drawable/button_rounded"
+            android:layout_marginHorizontal="32dp"
+            android:text="QR code transfer"
+            android:onClick="OnQRcodeClicked"/>
+    </LinearLayout>
+
+</RelativeLayout>

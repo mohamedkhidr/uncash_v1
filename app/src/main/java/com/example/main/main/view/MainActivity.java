@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import com.example.main.features.view.DashBoard;
 import com.example.main.main.presenter.httpConnection.LoginPresenterImpl;
+import com.example.main.main.presenter.httpConnection.ResetPresenterImpl;
 import com.example.main.main.presenter.httpConnection.SignupPresenterImpl;
+import com.example.main.resetPassword.phoneVerificationReset.view.PhoneVerificationResetImpl;
 import com.example.main.signup.phoneVerification.view.PhoneVerificationImpl;
 import com.example.main.R;
 
@@ -22,6 +24,7 @@ import com.example.main.validator.Signup;
 public class MainActivity extends AppCompatActivity implements Iview {
     private SignupPresenterImpl signupPresenter;
     private LoginPresenterImpl  loginPresenter ;
+    private ResetPresenterImpl resetPresenter ;
     private EditText phoneEditText ;
     private EditText passEditText ;
     ProgressDialog dialog;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements Iview {
         passEditText = (EditText) findViewById(R.id.passText);
         signupPresenter = new SignupPresenterImpl(this);
         loginPresenter = new LoginPresenterImpl(this);
+        resetPresenter = new ResetPresenterImpl(this);
     }
 
     public void OnSignup(View view) {
@@ -94,8 +98,32 @@ public class MainActivity extends AppCompatActivity implements Iview {
     }
 
     @Override
+    public void OnResetAuthenticationComplete(String accessToken) {
+        Intent intent = new Intent(this , PhoneVerificationResetImpl.class);
+        Toast.makeText(this , ""+accessToken , Toast.LENGTH_SHORT).show();
+        intent.putExtra("accessToken" ,accessToken );
+        dialog.dismiss();
+        startActivity(intent);
+    }
+
+    @Override
     public void showWrongCredentialsHint() {
         dialog.dismiss();
         Toast.makeText(this , "Invalid user name or password " , Toast.LENGTH_SHORT).show();
+    }
+
+    public void OnForgetPassword(View view) {
+        Network network = new Network(this);
+        boolean networkStatus = network.isNetworkConnected();
+        if(networkStatus) {
+            Log.v("msg", "onforget");
+            dialog = new ProgressDialog(this);
+            dialog.setTitle("Loading");
+            dialog.setMessage("Please wait ");
+            dialog.show();
+            resetPresenter.reset();
+        }else{
+            Toast.makeText(this , "Check network connectivity" , Toast.LENGTH_SHORT).show();
+        }
     }
 }

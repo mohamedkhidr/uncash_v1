@@ -11,10 +11,19 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.main.R;
+import com.example.main.features.credit.view.CreditGetter;
 import com.example.main.features.enquiry.enquiry.view.EnquiryParameters;
 import com.example.main.features.location.model.setting.LocationSettingHandlerImpl;
 import com.example.main.features.location.model.setting.PermissionHandlerImpl;
+import com.example.main.features.myOperations.view.MyOperation;
+import com.example.main.features.myOperations.view.MyOperationImpl;
 import com.example.main.features.presenter.PresenterImpl;
+import com.example.main.features.sendMoney.ChooseTransferWay;
+import com.example.main.features.sendMoney.manual.view.ManualTransferImpl;
+import com.example.main.features.sendMoney.useQR.GenerateQR;
+import com.example.main.features.sendMoney.useQR.QRTransferImpl;
+import com.example.main.features.sendMoney.useQR.TransferParamsActivity;
+import com.example.main.main.view.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 
@@ -50,6 +59,23 @@ public class DashBoard extends AppCompatActivity implements com.example.main.fea
 
         checkLocationAvailablity(context, activity);
 
+    }
+
+    public void OnTransferMoneyClicked(View view) {
+        Intent secondActivity = new Intent(this, ChooseTransferWay.class);
+        secondActivity.putExtra("accessToken" , accessToken);
+        startActivity(secondActivity);
+    }
+    public void OnManualClicked(View view) {
+        Intent secondActivity = new Intent(this, ManualTransferImpl.class);
+        secondActivity.putExtra("accessToken" , accessToken);
+        startActivity(secondActivity);
+    }
+
+    public void OnQRcodeClicked(View view) {
+        Intent secondActivity = new Intent(this, TransferParamsActivity.class);
+        secondActivity.putExtra("accessToken" , accessToken);
+        startActivity(secondActivity);
     }
 
     // return the current location coordinates of the device used by a map
@@ -93,6 +119,7 @@ public class DashBoard extends AppCompatActivity implements com.example.main.fea
     public void useDefaultLocation() {
         //branches feature
         Intent secondActivity = new Intent(this, EnquiryParameters.class);
+        secondActivity.putExtra("accessToken" , accessToken);
         startActivity(secondActivity);
     }
 
@@ -128,6 +155,26 @@ public class DashBoard extends AppCompatActivity implements com.example.main.fea
     }
 
 
+
+    public void onCreditClicked(View view) {
+        Intent intent = new Intent(this , CreditGetter.class);
+        intent.putExtra("accessToken" , accessToken);
+        startActivity(intent);
+    }
+
+    public void OnOperationClicked(View view) {
+        Intent intent = new Intent(this , MyOperationImpl.class);
+        intent.putExtra("accessToken" , accessToken);
+        startActivity(intent);
+    }
+
+    public void OnAccountClicked(View view) {
+        Intent intent = new Intent(this , MainActivity.class);
+
+        startActivity(intent);
+    }
+
+
     // async task inner class to execute the location process in the background thread
 
     private class LocationFinderTask extends AsyncTask<Context, Void, Void> {
@@ -143,6 +190,15 @@ public class DashBoard extends AppCompatActivity implements com.example.main.fea
         protected void onPostExecute(Void v) {
             Log.v("Message : ", "onPost");
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent backtoHome = new Intent(Intent.ACTION_MAIN);
+        backtoHome.addCategory(Intent.CATEGORY_HOME);
+        backtoHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(backtoHome);
+
     }
 
 }

@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.main.R;
+import com.example.main.main.view.MainActivity;
 import com.example.main.main.view.SucceededOperation;
 import com.example.main.signup.stroreCreation.Location.model.LocationSettingHandler;
 import com.example.main.signup.stroreCreation.Location.model.PermissionHandler;
@@ -119,6 +120,8 @@ public class CreateStoreImpl extends AppCompatActivity implements CreateStore {
     @Override
     public void onNoLocationRecieved() {
         Toast.makeText(this, "Some thing went wrong please Check Network Connectivity and permission settings" , Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this , MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

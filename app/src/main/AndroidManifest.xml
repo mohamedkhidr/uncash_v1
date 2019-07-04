@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.main">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="com.android.hardware.camera.focus" />
 
     <application
         android:allowBackup="true"
@@ -14,21 +18,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".features.view.DashBoard"></activity>
+        <activity android:name=".features.credit.view.CreditGetter"></activity>
+        <activity android:name=".features.myOperations.view.MyOperationImpl" />
+        <activity android:name=".main.view.MainActivity" />
+        <activity android:name=".features.sendMoney.useQR.TransferParamsActivity" />
+        <activity android:name=".features.sendMoney.useQR.GenerateQR" />
+        <activity android:name=".main.view.FailedOperation" />
+        <activity android:name=".features.sendMoney.manual.view.TrasnferSubmissionImpl" />
+        <activity android:name=".features.sendMoney.ChooseTransferWay" />
+        <activity android:name=".features.sendMoney.useQR.QRTransferImpl" />
+        <activity android:name=".features.sendMoney.manual.view.ManualTransferImpl" />
+        <activity android:name=".resetPassword.codeVerificationReset.view.CodeVerificationResetImpl" />
+        <activity android:name=".resetPassword.passwordReset.view.ResetPasswordImpl" />
+        <activity android:name=".resetPassword.phoneVerificationReset.view.PhoneVerificationResetImpl" />
+        <activity android:name=".features.view.DashBoard" />
         <activity android:name=".main.view.SucceededOperation" />
         <activity
             android:name=".signup.stroreCreation.view.CreateStoreImpl"
             android:label="@string/title_activity_create_store"
             android:theme="@style/AppTheme.NoActionBar" />
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC3ciGdt_lzREEd70E3OfNxZPPaTxy-ENQ"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC3ciGdt_lzREEd70E3OfNxZPPaTxy-ENQ" />
+
         <activity android:name=".signup.accountCreation.view.CreateUserImpl" />
         <activity android:name=".signup.codeVerification.view.CodeVerificationImpl" />
         <activity android:name=".features.enquiry.enquiry.view.EnquiryParameters" />
         <activity android:name=".features.enquiry.map.view.Map" />
         <activity android:name=".signup.phoneVerification.view.PhoneVerificationImpl" />
-        <activity android:name=".main.view.MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,6 +66,11 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

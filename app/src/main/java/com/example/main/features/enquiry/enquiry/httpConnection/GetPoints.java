@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GetPoints {
 
-    private static final String BASE_URL = "http://192.168.1.3:5000/";
+    private static final String BASE_URL = "https://uncashapp.herokuapp.com/";
     private String phoneNumber;
     private String accessToken;
     private Context context;

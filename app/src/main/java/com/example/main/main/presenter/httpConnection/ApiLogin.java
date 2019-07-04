@@ -15,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiLogin {
-    private static final String BASE_URL = "http://192.168.1.3:5000/";
+    private static final String BASE_URL = "https://uncashapp.herokuapp.com/";
     private static final String APP_USER_NAME = "uncashapp";
     private static final String APP_USER_PASSWORD = "234568643456786950" ;
     private SignupPresenter signupPresenter;
